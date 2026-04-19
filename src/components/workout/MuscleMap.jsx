@@ -1,64 +1,67 @@
 // muscle 키: chest | lat | trap | shoulder | bicep | tricep | forearm | quad | hamstring | glute | calf | abs
+// 이미지 실제 크기: 1024 × 1536 px
+// 표시 범위: y=40 ~ y=1440 (상단 여백·하단 텍스트 제거)
 
 const BASE = import.meta.env.BASE_URL
-
-const PRIMARY = '#7B53EA'
+const PRIMARY   = '#7B53EA'
 const SECONDARY = '#C4B5FD'
 
-// ── 근육별 오버레이 타원 좌표 (viewBox 0 0 820 1050 기준) ──
-// 왼쪽 절반: 전면(앞), 오른쪽 절반: 후면(뒤)
+// ── 좌표 기준 ────────────────────────────────────────────
+// 전면 인체 중심 x ≈ 255  (이미지 좌측 절반)
+// 후면 인체 중심 x ≈ 769  (이미지 우측 절반)
+// viewBox: "0 40 1024 1400"  (y=40~1440 구간만 표시)
 const OVERLAYS = {
   chest: [
-    { cx: 178, cy: 248, rx: 46, ry: 50 },
-    { cx: 244, cy: 248, rx: 46, ry: 50 },
+    { cx: 198, cy: 358, rx: 68, ry: 68 },
+    { cx: 312, cy: 358, rx: 68, ry: 68 },
   ],
   abs: [
-    { cx: 212, cy: 380, rx: 36, ry: 72 },
+    { cx: 255, cy: 512, rx: 50, ry: 98 },
   ],
   shoulder: [
-    { cx: 135, cy: 172, rx: 37, ry: 30 }, // 전면 좌
-    { cx: 289, cy: 172, rx: 37, ry: 30 }, // 전면 우
-    { cx: 533, cy: 172, rx: 37, ry: 30 }, // 후면 좌
-    { cx: 687, cy: 172, rx: 37, ry: 30 }, // 후면 우
+    { cx: 128, cy: 275, rx: 54, ry: 44 }, // 전면 좌
+    { cx: 382, cy: 275, rx: 54, ry: 44 }, // 전면 우
+    { cx: 644, cy: 275, rx: 54, ry: 44 }, // 후면 좌
+    { cx: 892, cy: 275, rx: 54, ry: 44 }, // 후면 우
   ],
   bicep: [
-    { cx: 108, cy: 272, rx: 22, ry: 54 },
-    { cx: 316, cy: 272, rx: 22, ry: 54 },
+    { cx: 107, cy: 455, rx: 30, ry: 80 },
+    { cx: 403, cy: 455, rx: 30, ry: 80 },
   ],
   tricep: [
-    { cx: 504, cy: 272, rx: 22, ry: 54 },
-    { cx: 716, cy: 272, rx: 22, ry: 54 },
+    { cx: 614, cy: 455, rx: 30, ry: 80 },
+    { cx: 922, cy: 455, rx: 30, ry: 80 },
   ],
   forearm: [
-    { cx:  90, cy: 372, rx: 18, ry: 54 },
-    { cx: 334, cy: 372, rx: 18, ry: 54 },
-    { cx: 488, cy: 372, rx: 18, ry: 54 },
-    { cx: 732, cy: 372, rx: 18, ry: 54 },
+    { cx:  80, cy: 590, rx: 24, ry: 78 },
+    { cx: 430, cy: 590, rx: 24, ry: 78 },
+    { cx: 596, cy: 590, rx: 24, ry: 78 },
+    { cx: 942, cy: 590, rx: 24, ry: 78 },
   ],
   trap: [
-    { cx: 610, cy: 195, rx: 90, ry: 58 },
+    { cx: 769, cy: 302, rx: 118, ry: 80 },
   ],
   lat: [
-    { cx: 550, cy: 328, rx: 44, ry: 76 },
-    { cx: 670, cy: 328, rx: 44, ry: 76 },
+    { cx: 670, cy: 480, rx: 57, ry: 108 },
+    { cx: 868, cy: 480, rx: 57, ry: 108 },
   ],
   glute: [
-    { cx: 578, cy: 490, rx: 54, ry: 50 },
-    { cx: 642, cy: 490, rx: 54, ry: 50 },
+    { cx: 722, cy: 702, rx: 72, ry: 68 },
+    { cx: 816, cy: 702, rx: 72, ry: 68 },
   ],
   quad: [
-    { cx: 178, cy: 604, rx: 40, ry: 86 },
-    { cx: 244, cy: 604, rx: 40, ry: 86 },
+    { cx: 213, cy: 852, rx: 56, ry: 120 },
+    { cx: 297, cy: 852, rx: 56, ry: 120 },
   ],
   hamstring: [
-    { cx: 573, cy: 612, rx: 40, ry: 84 },
-    { cx: 647, cy: 612, rx: 40, ry: 84 },
+    { cx: 716, cy: 858, rx: 56, ry: 118 },
+    { cx: 822, cy: 858, rx: 56, ry: 118 },
   ],
   calf: [
-    { cx: 175, cy: 800, rx: 27, ry: 60 }, // 전면 좌
-    { cx: 247, cy: 800, rx: 27, ry: 60 }, // 전면 우
-    { cx: 571, cy: 808, rx: 27, ry: 60 }, // 후면 좌
-    { cx: 649, cy: 808, rx: 27, ry: 60 }, // 후면 우
+    { cx: 208, cy: 1182, rx: 35, ry: 94 }, // 전면 좌
+    { cx: 302, cy: 1182, rx: 35, ry: 94 }, // 전면 우
+    { cx: 714, cy: 1188, rx: 35, ry: 94 }, // 후면 좌
+    { cx: 824, cy: 1188, rx: 35, ry: 94 }, // 후면 우
   ],
 }
 
@@ -67,6 +70,18 @@ const MUSCLE_LABELS = {
   bicep: '이두근', tricep: '삼두근', forearm: '전완근',
   quad: '대퇴사두근', hamstring: '햄스트링', glute: '둔근', calf: '종아리', abs: '복근',
 }
+
+// 이미지 크롭 설정 (픽셀 단위)
+const IMG_W = 1024, IMG_H = 1536
+const CROP_TOP = 40       // 상단 여백 제거
+const CROP_BOTTOM = 96    // 하단 텍스트+여백 제거 (y=1440까지 표시)
+const VIS_H = IMG_H - CROP_TOP - CROP_BOTTOM  // 1400
+
+// container height = W × VIS_H/IMG_W
+// image displayed height = W × IMG_H/IMG_W
+// top offset (as % of container height) = -(CROP_TOP/IMG_H) × (IMG_H/VIS_H) × 100
+const TOP_OFFSET_PCT = -(CROP_TOP / VIS_H) * 100  // ≈ -2.857%
+const IMG_HEIGHT_PCT = (IMG_H / VIS_H) * 100       // ≈ 109.7%
 
 export default function MuscleMap({ muscles }) {
   if (!muscles) return null
@@ -77,23 +92,39 @@ export default function MuscleMap({ muscles }) {
   ]
 
   function getColor(name) {
-    if (muscles.primary.includes(name)) return PRIMARY
+    if (muscles.primary.includes(name))   return PRIMARY
     if (muscles.secondary.includes(name)) return SECONDARY
     return null
   }
 
   return (
     <div>
-      {/* 해부학 이미지 + 근육 오버레이 */}
-      <div style={{ position: 'relative', width: '100%', borderRadius: 16, overflow: 'hidden', backgroundColor: '#F9F8FF' }}>
+      {/* 이미지 + SVG 오버레이 */}
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        aspectRatio: `${IMG_W} / ${VIS_H}`,
+        overflow: 'hidden',
+        borderRadius: 16,
+        backgroundColor: '#F5F3FF',
+      }}>
+        {/* 해부학 이미지 (상하 여백·텍스트 잘라냄) */}
         <img
           src={`${BASE}muscle-map.png`}
           alt="근육 해부도"
-          style={{ width: '100%', display: 'block' }}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: `${IMG_HEIGHT_PCT}%`,
+            top: `${TOP_OFFSET_PCT}%`,
+            left: 0,
+            objectFit: 'fill',
+          }}
         />
-        {/* 활성 근육만 오버레이 (비활성은 표시 안 함) */}
+
+        {/* 근육 오버레이: 활성 근육만 표시 */}
         <svg
-          viewBox="0 0 820 1050"
+          viewBox={`0 ${CROP_TOP} ${IMG_W} ${VIS_H}`}
           preserveAspectRatio="xMidYMid meet"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         >
@@ -105,7 +136,7 @@ export default function MuscleMap({ muscles }) {
                 key={`${muscle}-${i}`}
                 cx={r.cx} cy={r.cy} rx={r.rx} ry={r.ry}
                 fill={color}
-                opacity="0.42"
+                opacity="0.45"
               />
             ))
           })}
