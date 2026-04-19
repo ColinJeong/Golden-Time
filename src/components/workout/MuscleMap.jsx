@@ -1,67 +1,68 @@
 // muscle 키: chest | lat | trap | shoulder | bicep | tricep | forearm | quad | hamstring | glute | calf | abs
 // 이미지 실제 크기: 1024 × 1536 px
-// 표시 범위: y=40 ~ y=1440 (상단 여백·하단 텍스트 제거)
+// 좌표: 그림판 호버로 직접 측정한 실제 픽셀 좌표 (2026-04-19)
+// 표시 범위: y=190 ~ y=1336 (머리 위 여백·하단 텍스트 제거)
 
 const BASE = import.meta.env.BASE_URL
 const PRIMARY   = '#7B53EA'
 const SECONDARY = '#C4B5FD'
 
 // ── 좌표 기준 ────────────────────────────────────────────
-// 전면 인체 중심 x ≈ 255  (이미지 좌측 절반)
-// 후면 인체 중심 x ≈ 769  (이미지 우측 절반)
-// viewBox: "0 40 1024 1400"  (y=40~1440 구간만 표시)
+// 전면 인체 중심 x ≈ 302  (이미지 좌측 절반)
+// 후면 인체 중심 x ≈ 785  (이미지 우측 절반)
+// viewBox: "0 190 1024 1146"  (y=190~1336 구간만 표시)
 const OVERLAYS = {
   chest: [
-    { cx: 198, cy: 358, rx: 68, ry: 68 },
-    { cx: 312, cy: 358, rx: 68, ry: 68 },
+    { cx: 225, cy: 460, rx: 60, ry: 52 }, // 전면 좌 대흉근
+    { cx: 343, cy: 460, rx: 60, ry: 52 }, // 전면 우 대흉근
   ],
   abs: [
-    { cx: 255, cy: 512, rx: 50, ry: 98 },
+    { cx: 264, cy: 585, rx: 40, ry: 90 },
   ],
   shoulder: [
-    { cx: 128, cy: 275, rx: 54, ry: 44 }, // 전면 좌
-    { cx: 382, cy: 275, rx: 54, ry: 44 }, // 전면 우
-    { cx: 644, cy: 275, rx: 54, ry: 44 }, // 후면 좌
-    { cx: 892, cy: 275, rx: 54, ry: 44 }, // 후면 우
+    { cx: 155, cy: 397, rx: 48, ry: 42 }, // 전면 좌
+    { cx: 449, cy: 397, rx: 48, ry: 42 }, // 전면 우
+    { cx: 607, cy: 401, rx: 48, ry: 42 }, // 후면 좌
+    { cx: 963, cy: 401, rx: 48, ry: 42 }, // 후면 우
   ],
   bicep: [
-    { cx: 107, cy: 455, rx: 30, ry: 80 },
-    { cx: 403, cy: 455, rx: 30, ry: 80 },
+    { cx: 141, cy: 500, rx: 24, ry: 70 }, // 전면 좌
+    { cx: 459, cy: 500, rx: 24, ry: 70 }, // 전면 우
   ],
   tricep: [
-    { cx: 614, cy: 455, rx: 30, ry: 80 },
-    { cx: 922, cy: 455, rx: 30, ry: 80 },
+    { cx: 594, cy: 500, rx: 24, ry: 70 }, // 후면 좌
+    { cx: 950, cy: 500, rx: 24, ry: 70 }, // 후면 우
   ],
   forearm: [
-    { cx:  80, cy: 590, rx: 24, ry: 78 },
-    { cx: 430, cy: 590, rx: 24, ry: 78 },
-    { cx: 596, cy: 590, rx: 24, ry: 78 },
-    { cx: 942, cy: 590, rx: 24, ry: 78 },
+    { cx: 126, cy: 631, rx: 20, ry: 68 }, // 전면 좌
+    { cx: 463, cy: 631, rx: 20, ry: 68 }, // 전면 우
+    { cx: 585, cy: 642, rx: 20, ry: 68 }, // 후면 좌
+    { cx: 954, cy: 642, rx: 20, ry: 68 }, // 후면 우
   ],
   trap: [
-    { cx: 769, cy: 302, rx: 118, ry: 80 },
+    { cx: 776, cy: 428, rx: 120, ry: 70 },
   ],
   lat: [
-    { cx: 670, cy: 480, rx: 57, ry: 108 },
-    { cx: 868, cy: 480, rx: 57, ry: 108 },
+    { cx: 633, cy: 526, rx: 50, ry: 96 }, // 후면 좌
+    { cx: 871, cy: 526, rx: 50, ry: 96 }, // 후면 우
   ],
   glute: [
-    { cx: 722, cy: 702, rx: 72, ry: 68 },
-    { cx: 816, cy: 702, rx: 72, ry: 68 },
+    { cx: 705, cy: 736, rx: 72, ry: 58 },
+    { cx: 814, cy: 736, rx: 72, ry: 58 },
   ],
   quad: [
-    { cx: 213, cy: 852, rx: 56, ry: 120 },
-    { cx: 297, cy: 852, rx: 56, ry: 120 },
+    { cx: 219, cy: 872, rx: 52, ry: 105 }, // 전면 좌
+    { cx: 321, cy: 872, rx: 52, ry: 105 }, // 전면 우
   ],
   hamstring: [
-    { cx: 716, cy: 858, rx: 56, ry: 118 },
-    { cx: 822, cy: 858, rx: 56, ry: 118 },
+    { cx: 689, cy: 872, rx: 52, ry: 105 }, // 후면 좌
+    { cx: 821, cy: 872, rx: 52, ry: 105 }, // 후면 우
   ],
   calf: [
-    { cx: 208, cy: 1182, rx: 35, ry: 94 }, // 전면 좌
-    { cx: 302, cy: 1182, rx: 35, ry: 94 }, // 전면 우
-    { cx: 714, cy: 1188, rx: 35, ry: 94 }, // 후면 좌
-    { cx: 824, cy: 1188, rx: 35, ry: 94 }, // 후면 우
+    { cx: 222, cy: 983, rx: 32, ry: 82 }, // 전면 좌
+    { cx: 313, cy: 983, rx: 32, ry: 82 }, // 전면 우
+    { cx: 690, cy: 1022, rx: 32, ry: 82 }, // 후면 좌
+    { cx: 809, cy: 1022, rx: 32, ry: 82 }, // 후면 우
   ],
 }
 
@@ -71,17 +72,17 @@ const MUSCLE_LABELS = {
   quad: '대퇴사두근', hamstring: '햄스트링', glute: '둔근', calf: '종아리', abs: '복근',
 }
 
-// 이미지 크롭 설정 (픽셀 단위)
+// 이미지 크롭 설정 (픽셀 단위) — 그림판 좌표 실측 기반
 const IMG_W = 1024, IMG_H = 1536
-const CROP_TOP = 40       // 상단 여백 제거
-const CROP_BOTTOM = 96    // 하단 텍스트+여백 제거 (y=1440까지 표시)
-const VIS_H = IMG_H - CROP_TOP - CROP_BOTTOM  // 1400
+const CROP_TOP = 190      // 머리 위 여백 제거 (머리 꼭대기 y≈230)
+const CROP_BOTTOM = 200   // 하단 텍스트+여백 제거 (텍스트 y≈1334)
+const VIS_H = IMG_H - CROP_TOP - CROP_BOTTOM  // 1146
 
 // container height = W × VIS_H/IMG_W
 // image displayed height = W × IMG_H/IMG_W
-// top offset (as % of container height) = -(CROP_TOP/IMG_H) × (IMG_H/VIS_H) × 100
-const TOP_OFFSET_PCT = -(CROP_TOP / VIS_H) * 100  // ≈ -2.857%
-const IMG_HEIGHT_PCT = (IMG_H / VIS_H) * 100       // ≈ 109.7%
+// top offset (as % of container height) = -(CROP_TOP/VIS_H) × 100
+const TOP_OFFSET_PCT = -(CROP_TOP / VIS_H) * 100  // ≈ -16.58%
+const IMG_HEIGHT_PCT = (IMG_H / VIS_H) * 100       // ≈ 134.0%
 
 export default function MuscleMap({ muscles }) {
   if (!muscles) return null
